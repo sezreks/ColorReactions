@@ -9,7 +9,7 @@ public class LevelObject : MonoBehaviour
     public int minCubeCount;
     public int colorCount;
     public float time;
-    [SerializeField] private double fillAmount;
+
 
     private void Awake()
     {
@@ -52,6 +52,7 @@ public class LevelObject : MonoBehaviour
             {
                 CubeMovement.Instance.cube.GetComponent<BoxCollider>().enabled = false;
                 yield return new WaitForSeconds(2f);
+                UIManager.Instance.confetti.Play();
                 UIManager.Instance.winCanvas.gameObject.SetActive(true);
 
             }

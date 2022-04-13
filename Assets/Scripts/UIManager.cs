@@ -7,26 +7,30 @@ using UnityEngine.UI;
 
 public class UIManager : Singleton<UIManager>
 {
-    public Transform winCanvas, failCanvas, inGameCanvas;
+
+    public Transform winCanvas, failCanvas, inGameCanvas, startCanvas;
     public Image progressBarFill;
     [HideInInspector] public int levelCubeCount, mincubeCount;
+    public ParticleSystem confetti;
     public TMP_Text remainingTime;
 
     public bool timerActive;
-    public float timer, countdownTime;
+    public float timer;
     [SerializeField] private TMP_Text activeLevel, nextLevel, winScreenText;
 
     private void Start()
     {
-        countdownTime = timer;
+
         activeLevel.text = (PlayerData.Instance.curLevel + 1).ToString();
         nextLevel.text = (PlayerData.Instance.curLevel + 2).ToString();
         winScreenText.text = activeLevel.text;
-    }
-    public void FillProgressBar()
-    {
 
+
+        float minutes = Mathf.FloorToInt(timer / 60);
+        float seconds = Mathf.FloorToInt(timer % 60);
+        remainingTime.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
+
     private void FixedUpdate()
     {
         if (timer > 0 && timerActive)
@@ -60,6 +64,15 @@ public class UIManager : Singleton<UIManager>
         }
     }
 
+
+
+    public void StartGame()
+    {
+
+        timerActive = true;
+        startCanvas.gameObject.SetActive(false);
+
+    }
     public void NextLevel()
     {
 

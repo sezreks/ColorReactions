@@ -93,7 +93,7 @@ public class ColorCube : MonoBehaviour
         {
             delay = 3f;
         }
-        UIManager.Instance.FillProgressBar();
+
         CubeMovement.Instance.currentLevel.GetComponent<LevelObject>().cubes.Remove(transform);
 
         yield return new WaitForSeconds(delay);
@@ -113,10 +113,9 @@ public class ColorCube : MonoBehaviour
 
         transform.GetComponent<Animation>().Play();
         Destroy(gameObject, this.GetComponent<Animation>().clip.length);
-        if (UIManager.Instance.timer < UIManager.Instance.countdownTime)
-        {
-            UIManager.Instance.timer += .5f;
-        }
+
+        UIManager.Instance.timer += .15f;
+
 
 
 
