@@ -9,7 +9,7 @@ public class LevelObject : MonoBehaviour
     public int minCubeCount;
     public int colorCount;
     public float time;
-
+    public bool hasObject = false;
 
     private void Awake()
     {
@@ -29,12 +29,37 @@ public class LevelObject : MonoBehaviour
     {
         if (cubes.Count <= minCubeCount && cubes.Count >= 0)
         {
+
+
+
             StartCoroutine(EndGame());
+
+
+
+
         }
 
     }
     public IEnumerator EndGame()
     {
+
+        if (hasObject)
+        {
+
+            transform.eulerAngles = Vector3.Slerp(transform.eulerAngles, Vector3.zero, Time.deltaTime * 2f);
+
+
+            Extentions.TasksExtentions.DoActionAfterSecondsAsync(() => { hasObject = false; }, 3f);
+
+
+
+        }
+        else
+        {
+            transform.Rotate(Vector3.up, Space.World);
+        }
+
+
         UIManager.Instance.progressBarFill.fillAmount = 1f;
         var _cubes = cubes;
         for (int i = 0; i <= _cubes.Count - 1; i++)
@@ -42,7 +67,8 @@ public class LevelObject : MonoBehaviour
 
             _cubes[i].GetComponent<ColorCube>().delay = Random.Range(.2f, 1.8f);
             StartCoroutine(_cubes[i].GetComponent<ColorCube>().DestroyCube());
-            //Destroy(_cubes[i].gameObject, _cubes[i].GetComponent<Animation>().clip.length);
+            CubeMovement.Instance.cube.GetComponent<BoxCollider>().enabled = false;
+
 
             yield return new WaitForSeconds(.1f);
 
@@ -50,16 +76,27 @@ public class LevelObject : MonoBehaviour
             //TODO: WinCanvas
             if (i >= _cubes.Count - 1)
             {
-                CubeMovement.Instance.cube.GetComponent<BoxCollider>().enabled = false;
-                yield return new WaitForSeconds(2f);
-                UIManager.Instance.confetti.Play();
-                UIManager.Instance.winCanvas.gameObject.SetActive(true);
+                if (!hasObject)
+                {
+                    yield return new WaitForSeconds(2f);
+                    UIManager.Instance.confetti.Play();
+                    UIManager.Instance.winCanvas.gameObject.SetActive(true);
+                }
+                else
+                {
+                    UIManager.Instance.confetti.Play();
+                    UIManager.Instance.objectWinCanvas.gameObject.SetActive(true);
+
+
+                }
+
 
             }
 
         }
 
         UIManager.Instance.timerActive = false;
+
 
 
 

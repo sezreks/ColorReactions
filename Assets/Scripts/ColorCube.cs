@@ -34,7 +34,7 @@ public class ColorCube : MonoBehaviour
                 break;
             case 4:
                 renderer.material = colors[4];
-                cubeColor = "null";
+                cubeColor = "Pink";
                 break;
             default:
                 Destroy(gameObject);
@@ -44,14 +44,8 @@ public class ColorCube : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        rayDirections = new Vector3[] { transform.up, -transform.up, transform.forward, -transform.forward, transform.right, -transform.right };
-        if (showRays)
-        {
-            for (int i = 0; i < 6; i++)
-            {
-                Debug.DrawRay(transform.position, rayDirections[i], Color.green);
-            }
-        }
+        //rayDirections = new Vector3[] { transform.up, -transform.up, transform.forward, -transform.forward, transform.right, -transform.right };
+
 
 
         if (checkCubes)
@@ -99,9 +93,9 @@ public class ColorCube : MonoBehaviour
         yield return new WaitForSeconds(delay);
 
         var smoke = ObjectPoolManager.Instance.GetObject("Smoke");
-        ParticleSystem.MainModule main = smoke.transform.GetChild(0).GetComponent<ParticleSystem>().main;
+        ParticleSystem.MainModule main = smoke.transform.GetComponent<ParticleSystem>().main;
         var smokeColor = transform.GetComponent<Renderer>().material.color;
-        main.startColor = new Color(smokeColor.r, smokeColor.g, smokeColor.b, .5f);
+        main.startColor = new Color(smokeColor.r, smokeColor.g, smokeColor.b, 1f);
 
 
         //main.startColor.color.a = transform.GetComponent<Renderer>().material.color.a / 2f;

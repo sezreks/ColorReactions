@@ -12,7 +12,7 @@ namespace Assets.Scripts
         public RaycastHit hit;
         Vector3 touchPosWorld;
         private RaycastHit hitInformation;
-        [SerializeField] private bool moveCube = false;
+        private bool moveCube = false, rayHitCube = false;
         public Transform currentLevel;
         public Transform nextCube;
         public Image nextCubeColor;
@@ -88,7 +88,7 @@ namespace Assets.Scripts
 
                                     cube.transform.position = hit.transform.position + hit.normal;
                                     cube.transform.rotation = hit.transform.rotation;
-
+                                    rayHitCube = true;
                                 }
 
 
@@ -98,6 +98,8 @@ namespace Assets.Scripts
 
                                 cube.transform.position = crosshair.transform.position;
                                 cube.transform.rotation = Quaternion.Euler(0, 0, 0);
+                                rayHitCube = false;
+
                             }
 
                             #endregion
@@ -113,7 +115,7 @@ namespace Assets.Scripts
 
 
 
-                        if (moveCube)
+                        if (moveCube && rayHitCube)
                         {
                             if (hit.collider != null && hit.transform.TryGetComponent<ColorCube>(out ColorCube _cube))
                             {
@@ -152,7 +154,9 @@ namespace Assets.Scripts
                         crosshair.position = Vector3.down * 3;
                         cube.position = crosshair.position;
 
+                        rayHitCube = false;
                         moveCube = false;
+
 
 
 
