@@ -13,6 +13,7 @@ public class UIManager : Singleton<UIManager>
     [HideInInspector] public int levelCubeCount, mincubeCount;
     [HideInInspector] public ParticleSystem confetti;
     [HideInInspector] public TMP_Text remainingTime;
+    public GameObject fingerAnim, tapToPlay;
 
     public bool timerActive;
     public float timer;
@@ -20,7 +21,13 @@ public class UIManager : Singleton<UIManager>
 
     private void Start()
     {
+        if (PlayerPrefs.GetInt("HasOpened") == 0)
+        {
+            fingerAnim.SetActive(true);
+            tapToPlay.SetActive(false);
+            PlayerPrefs.SetInt("HasOpened", 1);
 
+        }
         activeLevel.text = (PlayerData.Instance.curLevel + 1).ToString();
         nextLevel.text = (PlayerData.Instance.curLevel + 2).ToString();
         winScreenText.text = activeLevel.text;
@@ -65,7 +72,10 @@ public class UIManager : Singleton<UIManager>
         }
     }
 
-
+    void OnApplicationQuit()
+    {
+        PlayerPrefs.SetInt("HasOpened", 0);
+    }
 
     public void StartGame()
     {

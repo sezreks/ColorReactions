@@ -1,0 +1,14 @@
+{
+  "friendlyName": "ZortikeZortZort",
+  "version": 1,
+  "Screens": [
+    {
+      "width": 1800,
+      "height": 2560,
+      "dpi": 308.0
+    }
+  ],
+  "SystemInfo": {
+    "operatingSystem": "Android"
+  }
+}

@@ -1,8 +1,8 @@
 using Assets.Scripts;
 using Assets.Scripts.Components;
+using MoreMountains.NiceVibrations;
 using System.Collections;
 using UnityEngine;
-
 public class ColorCube : MonoBehaviour
 {
     public string cubeColor;
@@ -83,9 +83,9 @@ public class ColorCube : MonoBehaviour
 
     public IEnumerator DestroyCube()
     {
-        if (delay > 3f)
+        if (delay > 5f)
         {
-            delay = 3f;
+            delay = 5f;
         }
 
         CubeMovement.Instance.currentLevel.GetComponent<LevelObject>().cubes.Remove(transform);
@@ -108,7 +108,10 @@ public class ColorCube : MonoBehaviour
         transform.GetComponent<Animation>().Play();
         Destroy(gameObject, this.GetComponent<Animation>().clip.length);
 
-        UIManager.Instance.timer += .15f;
+        transform.GetComponent<AudioSource>().Play();
+        MMVibrationManager.Haptic(HapticTypes.MediumImpact);
+
+        UIManager.Instance.timer += .25f;
 
 
 
