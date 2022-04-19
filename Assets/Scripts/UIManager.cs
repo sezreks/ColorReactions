@@ -86,7 +86,7 @@ public class UIManager : Singleton<UIManager>
     }
     public void NextLevel()
     {
-
+        TinySauce.OnGameFinished(true, PlayerData.Instance.curLevel);
         PlayerData.Instance.curLevel += 1;
         SceneManager.LoadScene(0);
 

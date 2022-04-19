@@ -22,6 +22,8 @@ public class PlayerData : Singleton<PlayerData>
     void Awake()
     {
         OpenLevel();
+        TinySauce.OnGameStarted(curLevel.ToString());
+
     }
 
     // Update is called once per frame
