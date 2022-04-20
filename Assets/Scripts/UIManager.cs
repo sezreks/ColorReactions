@@ -69,6 +69,7 @@ public class UIManager : Singleton<UIManager>
             failCanvas.gameObject.SetActive(true);
             Debug.Log("Failed");
             timer = 0;
+            remainingTime.text = "00:00";
         }
     }
 

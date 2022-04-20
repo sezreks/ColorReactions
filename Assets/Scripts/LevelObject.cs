@@ -46,7 +46,9 @@ public class LevelObject : MonoBehaviour
         if (hasObject)
         {
 
-            transform.eulerAngles = Vector3.Slerp(transform.eulerAngles, Vector3.zero, Time.deltaTime * 2f);
+            StartCoroutine(RotateObject());
+            //var rot = new Vector3(Mathf.Lerp(transform.eulerAngles.x, 0, Time.deltaTime * 2f), transform.eulerAngles.y, Mathf.Lerp(transform.eulerAngles.z, 0, Time.deltaTime * 2f));
+            //transform.eulerAngles = rot;//Vector3.Slerp(transform.eulerAngles, Vector3.zero, Time.deltaTime * 2f);
 
 
             Extentions.TasksExtentions.DoActionAfterSecondsAsync(() => { hasObject = false; }, 3f);
@@ -102,4 +104,9 @@ public class LevelObject : MonoBehaviour
 
     }
 
+    public IEnumerator RotateObject()
+    {
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.identity, Time.deltaTime * 2);
+        yield return 0;
+    }
 }
